@@ -72,12 +72,27 @@ primer_node_start, primer_node_end = get_dna_records_of_terminals(network, start
 # 6th Step
 # Simulate ligation reactions
 candidates = simulate_reaction(network, edges, (primer_node_start, primer_node_end))
-logging.info(candidates)
+logging.info('Number of possible candidates: {}'.format(len(candidates)))
 
 # 7th Step
 # Filter candidates
 filtered_candidates = filter_path_candidates(nodes_on_path, candidates)
-logging.info(filtered_candidates)
-
-# 8th Step
-# Decode remaining candidates back
+number_of_distinct_paths = len(filtered_candidates)
+if number_of_distinct_paths > 0:
+    singular = number_of_distinct_paths == 1
+    print(
+        'There {} {} hamiltonian path{} starting at {} and ending at {}'.format(
+            'is' if singular else 'are',
+            number_of_distinct_paths,
+            '' if singular else 's',
+            start_node,
+            end_node,
+        )
+    )
+    for i, candidate in enumerate(filtered_candidates):
+        logging.info(separator)
+        logging.info('Candidate #{}'.format(i + 1))
+        logging.info(candidate.seq)
+        logging.info(candidate.description)
+else:
+    print('There are no hamiltonian paths in this graph starting at {} and ending at {}'.format(start_node, end_node))

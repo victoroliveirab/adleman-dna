@@ -29,6 +29,18 @@ def _formatted_dna_sequence(network, edges, edge):
     return sequence_record
 
 
+def _print_pcr_product(product):
+    print('-' * 60)
+    print('{:^40}\n'.format('By DNA'))
+    print(product.detailed_figure())
+    print('{:^40}\n'.format('By Nodes'))
+    print(product.figure())
+
+
+def _get_fragments_description(fragments):
+    return '->'.join([fragment.name for fragment in fragments][1:])
+
+
 def _slice_candidate_strand(candidate):
     candidate.seq = candidate.seq[10:-10]
     return candidate
@@ -66,9 +78,13 @@ def simulate_reaction(network, edges, primers):
         pcr_with_primers = Anneal(primers, Dseqrecord(product), limit=10)
         pcr_products = pcr_with_primers.products
         if len(pcr_products) > 0:
+            _print_pcr_product(product)
             for candidate in pcr_products:
                 if len(candidate.seq) == desired_size:
+                    candidate.description = _get_fragments_description(product.source_fragments)
+                    print('This is a possible candidate')
                     candidates.append(_slice_candidate_strand(candidate))
+    print(assembly)
     return candidates
 
 
