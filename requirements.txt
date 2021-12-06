@@ -1,0 +1,14 @@
+appdirs==1.4.4
+biopython==1.65
+certifi==2021.10.8
+charset-normalizer==2.0.9
+idna==3.3
+networkx==2.6.3
+numpy==1.21.4
+ordered-set==4.0.2
+prettytable==2.4.0
+pydna==2.0.3
+pyparsing==3.0.6
+requests==2.26.0
+urllib3==1.26.7
+wcwidth==0.2.5
